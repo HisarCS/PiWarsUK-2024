@@ -1,4 +1,3 @@
-import time
 import RPi.GPIO as GPIO
 import configuration
 class MotorController():
@@ -112,10 +111,3 @@ class MotorController():
     def Cleanup(self):
         GPIO.cleanup()
         
-def test():
-    contoller = MotorController()
-    contoller.ChangeDutyCycle(100)
-    contoller.Forward()
-    time.sleep(3)
-    contoller.Stop()
-test()
