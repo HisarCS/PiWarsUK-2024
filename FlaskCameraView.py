@@ -8,6 +8,7 @@ app = Flask(__name__)
 def gen_frames():  
     while True:
         success, frame = cap.read()  # read the camera frame
+        
         if not success:
             break
         else:

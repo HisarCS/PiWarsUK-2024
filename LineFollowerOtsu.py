@@ -8,13 +8,15 @@ cap = cv2.VideoCapture(0)
 cap.set(3, 160)
 cap.set(4, 120)
 controller = MotorController()
-controller.ChangeDutyCycle(100)
+controller.ChangeDutyCycle(10)
+
 while True:
     ret, frame = cap.read()
     
-    blur = cv2.GaussianBlur(frame,(5,5),0)
+    blur = cv2.GaussianBlur(frame,(9,9),0)
     img_split, _, _ = cv2.split(blur)
-    _, thresh = cv2.threshold(img_split ,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+    thresh = cv2.adaptiveThreshold(blur, 255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 21, 4)
+	
     contours, hierarchy = cv2.findContours(thresh, 1, cv2.CHAIN_APPROX_NONE)
     if len(contours) > 0 :
         c = max(contours, key=cv2.contourArea)

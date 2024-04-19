@@ -1,3 +1,4 @@
+import time
 import RPi.GPIO as GPIO
 import configuration
 class MotorController():
@@ -99,15 +100,34 @@ class MotorController():
     def Right(self):
         self.__L_Forward__()
         self.__R_Backward__()
-    
+        
     def Left(self):
         self.__L_Backward__()
         self.__R_Forward__()
+        
+    def LeftInverse(self):
+        self.__L_Stop__()
+        self.__R_Backward__()
+        
+    def RightInverse(self):
+        self.__L_Backward__()
+        self.__R_Stop__()
         
     def Stop(self):
         self.__L_Stop__()
         self.__R_Stop__()
         
+        
     def Cleanup(self):
         GPIO.cleanup()
         
+def test():
+    controller = MotorController()
+    controller.ChangeDutyCycle(50)
+    controller.RightInverse()
+    time.sleep(5)
+    controller.Stop()
+    controller.Cleanup()
+    
+if __name__ == "__main__":
+    test()
